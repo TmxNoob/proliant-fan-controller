@@ -149,11 +149,12 @@ def calcSpeed(temp,curve):
 		largesttemp = temp
 	return (largestfan,largesttemp)
 
-#now the fun begins
+#now the fun begins (actual fan logic)
 wait = int(config["General"]["updateInterval"])
 
-profiles = {}
 
+#load the profiles and add some extra runtime variables
+profiles = {}
 for p in config["General"]["profiles"].split(","):
 	try:
 		hys = int(config[p]["hysteresis"])
@@ -171,7 +172,7 @@ for p in config["General"]["profiles"].split(","):
 	}
 
 while True:
-	maxFanSpeeds = {1:0,2:0,3:0,4:0,5:0,6:0,}
+	maxFanSpeeds = {1:0,2:0,3:0,4:0,5:0,6:0}
 	curTemps = temps.getTemps()
 	if ilo:
 		curTemps = curTemps+ilo.getTemps()
@@ -187,8 +188,10 @@ while True:
 		for x in pd["fans"]:
 			maxFanSpeeds[x] = max(maxFanSpeeds[x],profiles[pn]["lastSpeed"])
 	for fn,fs in maxFanSpeeds.items():
-		print(maxFanSpeeds)
-		#sf.setFan(fn,fs)
+		if args.debug
+			print(maxFanSpeeds)
+		else:
+			sf.setFan(fn,fs)
 	sleep(wait)
 
 
