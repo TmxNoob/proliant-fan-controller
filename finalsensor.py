@@ -73,17 +73,18 @@ serialport = "COM3"
 
 class serialFan(object):
 	"""docstring for serialFan"""
-	def __init__(self, serport):
+	def __init__(self, serport=False):
 		super(serialFan, self).__init__()
 		self.fans = [15,15,15,15,15,15]
 		self.ser  = serial.Serial(serport,9600,timeout=1)
 
 	def setFan(self,fan,speed):
 		self.fans[fan-1] = speed
-		fpwm = int(speed/100*255)
-		self.ser.write(b"s\n")
-		self.ser.write(b"%i\n"%fan)
-		self.ser.write(b"%i\n"%fpwm)
+		if self.ser:
+			fpwm = int(speed/100*255)
+			self.ser.write(b"s\n")
+			self.ser.write(b"%i\n"%fan)
+			self.ser.write(b"%i\n"%fpwm)
 
 
 	def getFan(self,fan):
