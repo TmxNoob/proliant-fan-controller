@@ -188,7 +188,7 @@ while True:
 		for x in pd["fans"]:
 			maxFanSpeeds[x] = max(maxFanSpeeds[x],profiles[pn]["lastSpeed"])
 	for fn,fs in maxFanSpeeds.items():
-		if args.debug
+		if args.debug:
 			print(maxFanSpeeds)
 		else:
 			sf.setFan(fn,fs)
