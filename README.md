@@ -6,3 +6,5 @@ This code is not tested with ILO yet since I havent found an extra ethernet cabl
 For configuring check exampleconfig.ini
 
 This script needs pyserial and wmi on windows or psutil on linux to work.
+On windows you need to have Open Hardware Monitor running to get the temps.
+https://openhardwaremonitor.org/
