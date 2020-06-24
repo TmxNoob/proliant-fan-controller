@@ -27,7 +27,6 @@ class wmiMonitor(object):
 			if s.SensorType==u'Temperature':
 				temps["local:%s"%s.Identifier] = {"temp":s.Value}
 		return temps
-
 class iloMonitor(object):
 	"""docstring for iloMonitor"""
 	def __init__(self, username, password, addr):
@@ -58,7 +57,6 @@ class iloMonitor(object):
 
 
 class serialFan(object):
-	"""docstring for serialFan"""
 	def __init__(self, serport=False):
 		super(serialFan, self).__init__()
 		self.fans = [15,15,15,15,15,15]
@@ -149,9 +147,8 @@ def calcSpeed(temp,curve):
 		largesttemp = temp
 	return (largestfan,largesttemp)
 
-#now the fun begins (actual fan logic)
 wait = int(config["General"]["updateInterval"])
-
+#now the fun begins (actual fan logic)
 
 #load the profiles and add some extra runtime variables
 profiles = {}
@@ -188,9 +185,7 @@ while True:
 		for x in pd["fans"]:
 			maxFanSpeeds[x] = max(maxFanSpeeds[x],profiles[pn]["lastSpeed"])
 	for fn,fs in maxFanSpeeds.items():
-		if args.debug:
-			print(maxFanSpeeds)
-		else:
+		if not args.debug:
 			sf.setFan(fn,fs)
 	sleep(wait)
 
